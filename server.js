@@ -1,11 +1,16 @@
 import express from 'express'; // res = response, req = request
 import pkg from '@prisma/client';
 const { PrismaClient } = pkg;
+import cors from 'cors';
+
 
 const prisma = new PrismaClient();
 
 const app = express();
 app.use(express.json())
+app.use(cors())
+
+// CRUD - CREATE, READ, UPDATE, DELETE
 
 app.post('/usuarios', async (req, res) => { // rota para criar usuarios
     
@@ -43,7 +48,7 @@ app.put('/usuarios/:id', async (req, res) => { // rota para modificar usuarios
     res.status(201).json(req.body) // status 201 = criado
 })
 
-app.delete('/usuarios/:id', async (req, res) => { // rota para  usuarios
+app.delete('/usuarios/:id', async (req, res) => { // rota para deletar usuarios
     
     await prisma.user.delete({
         where: {
@@ -53,6 +58,7 @@ app.delete('/usuarios/:id', async (req, res) => { // rota para  usuarios
     
     res.status(204).json(req.body) // status 201 = criado
 })
+
 
 
 
